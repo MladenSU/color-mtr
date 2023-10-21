@@ -13,9 +13,7 @@ DEFAULT_LATENCY_WARN = 10
 DEFAULT_LATENCY_CRIT = 100
 
 # Colors
-
-
-def cw(x): return colored(x, "white")
+def cw(x): return colored(x, "white", attrs=["bold", "underline"])
 def cy(x): return colored(x, "yellow")
 def cb(x): return colored(x, "blue")
 def cr(x): return colored(x, "red")
@@ -60,18 +58,9 @@ def _report(data):
             if k in latency_headers:
                 all_entries[a][k] = _mark_latency(v, latency_threshold)
 
-    headers = [cb(x) for x in all_entries[0].keys()]
+    headers = [cw(x.capitalize()) for x in all_entries[0].keys()]
     data = [list(x.values()) for x in all_entries]
     print(tabulate(data, headers=headers, numalign="right"))
-
-
-def _start_info(data, start_time, end_time):
-    result = [f"{cb('Start: ')} {cy(start_time)}",
-              f"{cb('Source: ')} {cy(data.get('src', 'Unknown'))}",
-              f"{cb('Destination: ')} {cy(data.get('dst', 'Unknown'))}",
-              f"{cb('Count: ')} {cy(data.get('tests', 'Unknown'))}",
-              f"{cb('End: ')} {cg(end_time)}"]
-    print(tabulate([[]], headers=result))
 
 
 def _verify_mtr():
@@ -101,11 +90,8 @@ def _exec_mtr(*args):
 
 
 def main(user_input):
-    start_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print("Generating a report.")
     data = _exec_mtr(user_input)
-    end_time = datetime.now().strftime('%H:%M:%S')
-    _start_info(data.get("report").get("mtr"), start_time, end_time)
     _report(data)
 
 
