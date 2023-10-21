@@ -2,7 +2,7 @@
 
 console_device="/dev/tty1"
 INTERFACE="eth0"
-command_to_execute="sudo python3 /root/color-mtr/cmtr-rpi.py -n -i 2 -c 10 google.com -o LSAW -w"
+command_to_execute="sudo python3 /root/color-mtr/cmtr-rpi.py -n -i 2 -c 10 google.com -o LSAW -r"
 initial_run=true
 
 function write_to_tty {
