@@ -1,0 +1,8 @@
+[Unit]
+Description=Ethernet cable detection service
+
+[Service]
+ExecStart=/path/to/ethernet_detect.py
+
+[Install]
+WantedBy=multi-user.target
